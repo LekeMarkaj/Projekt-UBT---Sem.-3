@@ -357,7 +357,7 @@ if (isUserLoggedIn()) {
             const totalAmount = cartItems.reduce((total, item) => total + parseFloat(item.price), 0);
             cartTotal.innerHTML = `
                 <p>Total: $${totalAmount.toFixed(2)}</p>
-                <button onclick="checkout(${totalAmount.toFixed(2)})">Checkout</button>
+                <button onclick="checkout(${totalAmount})">Checkout</button>
             `;
 
             const existingTotal = document.querySelector('.cart-total');

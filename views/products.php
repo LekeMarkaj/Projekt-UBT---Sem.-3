@@ -250,7 +250,7 @@ if (isUserLoggedIn()) {
 
 		let fetchedProduct;
 		
-		fetch('../data.json')
+		fetch('/Projekt-UBT---Sem.-3/controller/fetchProducts.php')
 			.then(response => response.json())
 			.then(data => {
 				const container = document.getElementById('card-container');
@@ -281,34 +281,10 @@ if (isUserLoggedIn()) {
 					const p = document.createElement('div');
 					p.style.fontFamily = "Trebuchet MS "
 					p.className = "device_price_parent_div"
-					if (device.sale.isOnSale) {
-						const p_discount = document.createElement("div")
-						const p_sale = document.createElement('p');
-						const p_original = document.createElement('p')
-						const p_sale_percentage = document.createElement('p')
-						p_discount.className = "device_discount_div"
-						p_sale.className = 'device_sale_price'
-						p_original.className = "device_original_price"
-						p_sale_percentage.className = "device_sale_percentage"
-					
-						p_sale.textContent = (device.price * ((100-device.sale.discountPercentage)/100)).toFixed(2) + "$"
-						p_original.textContent = device.price + "$	"
-					
-						
-						p_sale_percentage.textContent = "-" + device.sale.discountPercentage + "%"
-					
-						p_discount.appendChild(p_original)
-						p_discount.appendChild(p_sale_percentage)
-						p.appendChild(p_discount)
-						p.appendChild(p_sale)
-					}
-					else {
+				
 						const p_original = document.createElement('p');
 						p_original.textContent = device.price + "$"
 						p.appendChild(p_original)
-
-					}
-
 
 					add_to_cart = document.createElement('a')
 					add_to_cart.innerHTML = ""

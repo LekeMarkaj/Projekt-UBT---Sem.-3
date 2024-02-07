@@ -384,6 +384,18 @@ if (isUserLoggedIn()) {
             return result;
         }, {});
     } 
+
+    <?php
+        if (isset($_SESSION['login_error'])) {
+            echo "formAlert('{$_SESSION['login_error']}');";
+            unset($_SESSION['login_error']); // Clear the error message to avoid displaying it again on page reload
+        }
+		if (isset($_SESSION['Update_success'])) {
+            echo "formAlertSuccess('{$_SESSION['Update_success']}');";
+            unset($_SESSION['Update_success']); // Clear the error message to avoid displaying it again on page reload
+        }
+    ?>
+    
 </script>
     </main>
 

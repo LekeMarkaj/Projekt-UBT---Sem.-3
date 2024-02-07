@@ -18,7 +18,7 @@ if(isset($_POST['loginBtn'])){
         $user  = $userRepository->getUserByEmailAndPassword($email,$password);
 
         if($user==null){
-            echo "<script>alert('Invalid Credentials!'); </script>";
+            $_SESSION['login_error'] = "Invalid Credentials!";
         }elseif($user['role'] === 'admin'){
             $_SESSION["id"] = $user['id'];
             $_SESSION["active"] = 1;

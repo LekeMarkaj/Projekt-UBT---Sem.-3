@@ -125,10 +125,9 @@ if (isUserLoggedIn()) {
 
             document.getElementById('signupLink').addEventListener('click', function(event) {
                 if (active === 1) {   
-                    console.log("HellooooooOOOOOOOOOOOOOOOOOOOO");
                     event.preventDefault();
                     if(role === 'admin'){
-                        // window.location.href = "/Projekt-UBT---Sem.-3/views/accountAdmin.php?id=" + userId;
+                        window.location.href = "/Projekt-UBT---Sem.-3/views/accountAdmin.php?id=" + userId;
                     }else{
                         window.location.href = "/Projekt-UBT---Sem.-3/views/account.php?id=" + userId;
                     }

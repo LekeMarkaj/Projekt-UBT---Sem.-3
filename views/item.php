@@ -33,7 +33,7 @@ if (isUserLoggedIn()) {
 	<link rel="stylesheet" href="../style/root.css">
 	<script src="https://unpkg.com/ionicons@4.5.0/dist/ionicons.js"></script>
     <script src="../scripts/scroll_to_contact.js"></script>
-<link rel="stylesheet" href="../style/back_to_top.css">
+	<link rel="stylesheet" href="../style/back_to_top.css">
 
 	<title>SunSpot</title>
 </head>
@@ -126,7 +126,7 @@ if (isUserLoggedIn()) {
         </script>
 
 	</header>
-	<button id="back-to-top" onclick="scrollToTop()" >^</button>
+	<button id="back-to-top" onclick="scrollToTop()">^</button>
 
 	<div id="item-card-container">
 
@@ -138,11 +138,18 @@ if (isUserLoggedIn()) {
 
 		const querySearch = window.location.search;
 		const id = new URLSearchParams(querySearch).get('id')
-		fetch('../data.json')
+		fetch('../controller/fetchItem.php', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				product_id: id,
+			}),
+		})
 			.then(response => response.json())
-			.then(data => {
-				for (const device of data) {	
-					if (device.id == id) {
+			.then(device => {
+				console.log(device)
 						fetchedProduct = device;
 
 						const container = document.getElementById('item-card-container');
@@ -159,16 +166,6 @@ if (isUserLoggedIn()) {
 						img.alt = 'Device Image';
 						img.className = 'card-img';
 						imgContainer.appendChild(img);
-
-						if (device.sale.isOnSale) {
-							const sale_percentage = document.createElement('div');
-							sale_percentage.className = 'sale-percentage';
-							sale_percentage.textContent = `${device.sale.discountPercentage}%`;
-							imgContainer.appendChild(sale_percentage);
-
-						}
-
-
 
 						const card_body = document.createElement('div');
 						card_body.className = 'card-body';
@@ -190,7 +187,7 @@ if (isUserLoggedIn()) {
 							"weight": device.weight,
 							"dimensions": { "length": device.dimensions.length, "width": device.dimensions.width, "depth": device.dimensions.depth },
 							"camera": { "front": device.camera.front, "rear": device.camera.rear },
-							"additional features": device.additional_features,
+							"additional features": JSON.parse(device.additional_features),
 					
 						};
 
@@ -250,7 +247,7 @@ if (isUserLoggedIn()) {
 						card_body.appendChild(table)
 						const price_container = document.createElement('div')
 						const price = document.createElement('h1');
-						price.textContent = '$' + device.price.toFixed(2);
+						price.textContent = '$' + device.price;
 						price.className = 'card-price';
 						price_container.className='price-container'
 
@@ -277,8 +274,7 @@ if (isUserLoggedIn()) {
 						};
 
 						container.appendChild(card);
-					}
-				}
+		
 				return null;
 			});
 

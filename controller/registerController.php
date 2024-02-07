@@ -3,8 +3,7 @@ include_once '../repository/userRepository.php';
 include_once '../models/user.php';
 
 if(isset($_POST['registerBtn'])){
-    if(empty($_POST['email']) ||
-    empty($_POST['username']) || empty($_POST['password'])){
+    if(empty($_POST['email']) || empty($_POST['username']) || empty($_POST['password'])){
         echo "Fill all fields!";
     }else{
         $email = $_POST['email'];
@@ -14,11 +13,21 @@ if(isset($_POST['registerBtn'])){
         $active = 0;
 
         $user  = new User($id,$email,$username,$password,$active);
+        
         $userRepository = new UserRepository();
 
-        $userRepository->insertUser($user);
-        
-        echo "<script> alert('User has been inserted successfuly!'); </script>";
+        if ($userRepository->isEmailTaken($email)) {
+            $_SESSION['login_error'] = "Email is taken!";
+
+        } elseif ($userRepository->isUsernameTaken($username)) {
+            // Check if username is taken
+            $_SESSION['login_error'] = "Username is taken!";
+
+        } else {
+            // If email and username are not taken, insert the user
+            $userRepository->insertUser($user);
+            $_SESSION['SignUp_success'] = "User Created";
+        }
     }
 }
 ?>

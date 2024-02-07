@@ -129,6 +129,22 @@
 					},
 				});
 		}
+
+		function formAlertSuccess (text){
+
+			Swal.fire({
+					title: text,
+					timer: 2000,
+					icon:"success",
+					confirmButtonColor:"rgb(var(--dark	))",
+					didOpen: () => {
+						Swal.showLoading();
+						Swal.hideLoading()
+
+					},
+				});
+		}
+
 		function validateSignUp() {
 			var user_name = document.getElementById('sign_up_user_name');
 			var email = document.getElementById('sign_up_email');
@@ -180,6 +196,17 @@
 
 			return true;
 		}
+		
+		<?php
+        if (isset($_SESSION['login_error'])) {
+            echo "formAlert('{$_SESSION['login_error']}');";
+            unset($_SESSION['login_error']); // Clear the error message to avoid displaying it again on page reload
+        }
+		if (isset($_SESSION['SignUp_success'])) {
+            echo "formAlertSuccess('{$_SESSION['SignUp_success']}');";
+            unset($_SESSION['SignUp_success']); // Clear the error message to avoid displaying it again on page reload
+        }
+        ?>
 	</script>
 
 <footer>

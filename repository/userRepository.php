@@ -101,5 +101,24 @@ class UserRepository{
         $statement4 = $conn->prepare($sql4);
         $statement4->execute([$id]);
     } 
+
+    public function isEmailTaken($email) {
+        $query = "SELECT COUNT(*) as count FROM users WHERE email = :email";
+        $stmt = $this->connection->prepare($query);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result['count'] > 0;
+    }
+    public function isUsernameTaken($username) {
+        $query = "SELECT COUNT(*) as count FROM users WHERE username = :username";
+        $stmt = $this->connection->prepare($query);
+        $stmt->bindParam(':username', $username);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result['count'] > 0;
+    }
 }
 ?>
